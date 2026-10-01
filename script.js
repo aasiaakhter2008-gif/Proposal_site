@@ -9,6 +9,7 @@ const buttonArea = document.getElementById("buttonArea");
 const card = document.getElementById("card");
 
 let noClicks = 0;
+let yesClicks = 0;
 
 
 /* =====================================================
@@ -25,6 +26,21 @@ const noMessages = [
   "Your heart said yes! ✨",
   "Don't make me wait 😌",
   "Okay... I'll keep asking 🤭"
+];
+
+
+/* =====================================================
+   YES BUTTON MESSAGES
+===================================================== */
+
+const yesMessages = [
+  "Think again... 😊",
+  "Are you sure? 🙈",
+  "Really? 🥺",
+  "Wait... think properly 😏",
+  "Are you REALLY sure? 🤭",
+  "I need a real YES! 🤍",
+  "Your heart knows the answer! ✨"
 ];
 
 
@@ -52,6 +68,27 @@ const littleNotes = [
 
 
 /* =====================================================
+   YES BUTTON NOTES
+===================================================== */
+
+const yesNotes = [
+  "Hmm... that was a little too quick. 😊",
+
+  "Are you sure your heart agrees? 🙈",
+
+  "Think carefully... this is forever. 🤍",
+
+  "I know you can give me a better answer. 😏",
+
+  "You're making me blush! 🤭",
+
+  "Okay... now I believe you. Maybe. 💕",
+
+  "One more time... from your heart. ✨"
+];
+
+
+/* =====================================================
    MOVE NO BUTTON
 ===================================================== */
 
@@ -59,16 +96,23 @@ function moveNoButton() {
 
   noClicks++;
 
-  const areaWidth = buttonArea.clientWidth;
-  const areaHeight = buttonArea.clientHeight;
 
-  const buttonWidth = noBtn.offsetWidth;
-  const buttonHeight = noBtn.offsetHeight;
+  const areaWidth =
+    buttonArea.clientWidth;
+
+  const areaHeight =
+    buttonArea.clientHeight;
+
+  const buttonWidth =
+    noBtn.offsetWidth;
+
+  const buttonHeight =
+    noBtn.offsetHeight;
 
 
   /*
-   * Calculate the maximum position where
-   * the button can safely exist.
+   * Calculate the maximum position
+   * where the button can safely exist.
    */
 
   const maxX =
@@ -116,7 +160,8 @@ function moveNoButton() {
    * Change positioning mode.
    */
 
-  noBtn.style.position = "absolute";
+  noBtn.style.position =
+    "absolute";
 
   noBtn.style.left =
     `${randomX}px`;
@@ -140,7 +185,8 @@ function moveNoButton() {
 
 
   /*
-   * Make the YES button slightly more noticeable.
+   * Make YES button slightly
+   * more noticeable.
    */
 
   const scale =
@@ -174,8 +220,59 @@ function moveNoButton() {
 
 function sayYes() {
 
+  yesClicks++;
+
+
   /*
-   * Change the main question.
+   * First several clicks show
+   * playful messages.
+   */
+
+  if (yesClicks < 6) {
+
+    const messageIndex =
+      Math.min(
+        yesClicks - 1,
+        yesMessages.length - 1
+      );
+
+    yesBtn.textContent =
+      yesMessages[messageIndex];
+
+
+    /*
+     * Change the little note.
+     */
+
+    const noteIndex =
+      Math.min(
+        yesClicks - 1,
+        yesNotes.length - 1
+      );
+
+    littleNote.textContent =
+      yesNotes[noteIndex];
+
+
+    /*
+     * Make the YES button slightly bigger.
+     */
+
+    const scale =
+      Math.min(
+        1 + yesClicks * 0.035,
+        1.18
+      );
+
+    yesBtn.style.transform =
+      `scale(${scale})`;
+
+    return;
+  }
+
+
+  /*
+   * FINAL YES
    */
 
   question.innerHTML =
@@ -183,7 +280,7 @@ function sayYes() {
 
 
   /*
-   * Change the supporting message.
+   * Change supporting message.
    */
 
   subtitle.textContent =
@@ -193,7 +290,7 @@ function sayYes() {
 
 
   /*
-   * Change the little flirting message.
+   * Change final little message.
    */
 
   littleNote.textContent =
@@ -201,10 +298,11 @@ function sayYes() {
 
 
   /*
-   * Remove the buttons.
+   * Remove both buttons.
    */
 
   yesBtn.remove();
+
   noBtn.remove();
 
 
@@ -269,10 +367,10 @@ function createCelebration() {
 
     particle.textContent =
       symbols[
-      Math.floor(
-        Math.random() *
-        symbols.length
-      )
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
       ];
 
 
@@ -356,23 +454,4 @@ yesBtn.addEventListener(
 noBtn.addEventListener(
   "click",
   moveNoButton
-);
-
-/* =====================================================
-   BACKGROUND MUSIC
-===================================================== */
-
-const backgroundMusic =
-  document.getElementById("backgroundMusic");
-
-backgroundMusic.volume = 0.5;
-
-function startBackgroundMusic() {
-  backgroundMusic.play().catch(() => {});
-}
-
-document.addEventListener(
-  "click",
-  startBackgroundMusic,
-  { once: true }
 );
