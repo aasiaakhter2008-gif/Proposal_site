@@ -36,7 +36,7 @@ const noMessages = [
 const yesMessages = [
   "Think again... 😊",
   "Are you sure? 🙈",
-  "Really? 🥺",
+  "Really? 😍",
   "Wait... think properly 😏",
   "Are you REALLY sure? 🤭",
   "I need a real YES! 🤍",
